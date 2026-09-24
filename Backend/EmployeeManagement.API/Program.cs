@@ -1,4 +1,6 @@
 using EmployeeManagement.API.Services;
+using EmployeeManagement.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+builder.Services.AddDbContext<EmployeeDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add OpenAPI generation
 builder.Services.AddOpenApi();
